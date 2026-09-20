@@ -15,7 +15,7 @@ st.set_page_config(
 # Nama file database Excel dan Folder Gambar
 EXCEL_FILE = "menu.xlsx"
 IMAGE_FOLDER = "assets"
-NOMOR_WHATSAPP = "6281335303199" # Nomor WhatsApp Satsun
+NOMOR_WHATSAPP = "6285775168788" # Nomor WhatsApp Sempat Kuliner
 
 # Membuat folder assets secara otomatis jika belum ada
 if not os.path.exists(IMAGE_FOLDER):
