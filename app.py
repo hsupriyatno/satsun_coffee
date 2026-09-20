@@ -227,7 +227,7 @@ elif selected == "Our Menu & Orders":
             if nama_pelanggan.strip() == "":
                 st.button("🚀 Kirim via WhatsApp (Masukkan Nama Anda)", disabled=True)
             else:
-                pesan_wa = f"Halo Satsun Coffee, saya mau pesan:\n\n{order_list_text}\nTotal Belanja: Rp {int(total_belanja):,}\nNama Pelanggan: {nama_pelanggan}\nMetode: {opsi_makan}\n\nMohon diproses ya, terima kasih! 🙏☕"
+                pesan_wa = f"Halo Sempat Kuliner, saya mau pesan:\n\n{order_list_text}\nTotal Belanja: Rp {int(total_belanja):,}\nNama Pelanggan: {nama_pelanggan}\nMetode: {opsi_makan}\n\nMohon diproses ya, terima kasih! 🙏☕"
                 url_wa = f"https://wa.me/{NOMOR_WHATSAPP}?text={urllib.parse.quote(pesan_wa)}"
                 st.markdown(f'<a href="{url_wa}" target="_blank" style="text-decoration: none;"><div style="background-color: #D7CCC8; color: #3E2723; padding: 12px 20px; border-radius: 8px; border: 1px solid #BCAAA4; font-weight: bold; text-align: center; cursor: pointer;">🚀 Kirim via WhatsApp</div></a>', unsafe_allow_html=True)
             
