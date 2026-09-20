@@ -1,2 +1,2 @@
 # satsun_coffee
-Saturday Sunmory Coffee
+Saturday Sunmori Coffee
