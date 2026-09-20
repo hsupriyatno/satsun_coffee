@@ -132,13 +132,13 @@ selected = option_menu(
 )
 
 if selected == "Home":
-    st.markdown("<h1 style='text-align: center; margin-bottom: 20px;'>☕ Welcome to Satsun Coffee</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; margin-bottom: 20px;'>☕ Welcome to Sempat Kuliner</h1>", unsafe_allow_html=True)
     if os.path.exists("foto_cafe.jpg"):
         st.image("foto_cafe.jpg", use_container_width=True)
     else:
         st.image("https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800", use_container_width=True)
     st.markdown("<h3 style='text-align: center; color: #6D4C41;'>Where Every Sip Tells a Story</h3>", unsafe_allow_html=True)
-    st.write("Satsun Coffee hadir untuk menemani hari Anda dengan racikan kopi pilihan.")
+    st.write("Sempat Kuliner hadir untuk menemani hari Anda dengan racikan makanan dan aneka minuman pilihan.")
     
 elif selected == "Our Menu & Orders":
     st.title("📋 Menu Satsun")
