@@ -1,2 +1,2 @@
 # Kuliner Sempat
-Saturday Sunmori Coffee
+Saturday-Sunmori Coffee
