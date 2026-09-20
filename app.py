@@ -7,7 +7,7 @@ import urllib.parse
 
 # Konfigurasi Halaman
 st.set_page_config(
-    page_title="Satsun Coffee",
+    page_title="Sempat Kuliner",
     page_icon="☕",
     layout="centered"
 )
