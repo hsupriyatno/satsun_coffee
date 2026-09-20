@@ -243,7 +243,7 @@ elif selected == "Admin Dashboard":
     
     st.subheader("➕ Tambah Menu Baru")
     with st.form("form_tambah_menu", clear_on_submit=True):
-        new_kategori = st.selectbox("Kategori", ["Coffee", "Non-Coffee", "Main menu""Snack"])
+        new_kategori = st.selectbox("Kategori", ["Coffee", "Non-Coffee", "Main menu", "Snack"])
         new_nama = st.text_input("Nama Makanan / Minuman")
         new_harga = st.number_input("Harga (Rp)", min_value=0, step=1000)
         submit_btn = st.form_submit_button("Simpan ke Excel")
