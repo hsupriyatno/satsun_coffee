@@ -238,11 +238,11 @@ elif selected == "Our Menu & Orders":
 
 elif selected == "Find Us":
     st.title("📍 Lokasi & Kontak")
-    st.write("**Alamat Kedai:** Jl. Kopi Warm No. 486")
-    st.write("**Jam Operasional:** 08:00 - 22:00 WIB")
-    st.write("**Kontak:** +62 813-3530-3199")
-    st.markdown("- [Instagram: satsun.coffee.ins](https://www.instagram.com/satsun.coffee.ins/)")
-    st.markdown("- [Facebook: satsun.coffee.fb](https://www.facebook.com/satsun.coffee.fb/)")
+    st.write("**Alamat Kedai:** Jl. Kembar No.2 Cirebon")
+    st.write("**Jam Operasional:** 08:00 - 23:00 WIB")
+    st.write("**Kontak:** +62 857-7516-8788")
+    st.markdown("- [Instagram: SempatKuliner.ins](https://www.instagram.com/sempat_kuliner.ins/)")
+    st.markdown("- [Facebook: SempatKuliner.fb](https://www.facebook.com/SempatKuliner.fb/)")
 
 elif selected == "Admin Dashboard":
     st.title("📊 Satsun Internal Dashboard")
