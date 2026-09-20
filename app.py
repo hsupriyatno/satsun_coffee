@@ -43,7 +43,7 @@ def load_data():
         return df
     else:
         data = {
-            "Kategori": ["Coffee", "Coffee", "Non-Coffee", "Snack"],
+            "Kategori": ["Coffee", "Non-Coffee", "Main Menu", "Snack"],
             "Nama Menu": ["Satsun Signature Latte", "Espresso", "Matcha Latte", "Croissant Butter"],
             "Harga": [28000, 18000, 25000, 22000],
             "Gambar": ["", "", "", ""]
