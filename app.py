@@ -150,7 +150,7 @@ if selected == "Home":
     st.write("Sempat Kuliner hadir untuk menemani hari Anda dengan racikan makanan dan aneka minuman pilihan.")
     
 elif selected == "Our Menu & Orders":
-    st.title("📋 Menu Satsun")
+    st.title("📋 Menu Sempat Kuliner")
     
     col_menu, col_cart = st.columns([5, 3])
     
@@ -254,7 +254,7 @@ elif selected == "Find Us":
     st.markdown("- [Facebook: SempatKuliner.fb](https://www.facebook.com/SempatKuliner.fb/)")
 
 elif selected == "Admin Dashboard":
-    st.title("📊 Satsun Internal Dashboard")
+    st.title("📊 Sempat Kuliner Internal Dashboard")
 
     st.subheader("➕ Tambah Menu Baru")
     # Tentukan daftar kategori standar agar konsisten
