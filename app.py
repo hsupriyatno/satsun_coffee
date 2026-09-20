@@ -39,19 +39,25 @@ def load_data():
         df = pd.read_excel(EXCEL_FILE)
         if "Gambar" not in df.columns:
             df["Gambar"] = ""
-            df.to_excel(EXCEL_FILE, index=False)
+        # Memastikan kolom Gambar berkategori string/object agar tidak memicu TypeError
+        df["Gambar"] = df["Gambar"].fillna("").astype(str)
         return df
     else:
         data = {
             "Kategori": ["Coffee", "Non-Coffee", "Main Menu", "Snack"],
-            "Nama Menu": ["Satsun Signature Latte", "Espresso", "Matcha Latte", "Croissant Butter"],
+            "Nama Menu": [
+                "Satsun Signature Latte",
+                "Espresso",
+                "Matcha Latte",
+                "Croissant Butter",
+            ],
             "Harga": [28000, 18000, 25000, 22000],
-            "Gambar": ["", "", "", ""]
+            "Gambar": ["", "", "", ""],
         }
         df = pd.DataFrame(data)
+        df["Gambar"] = df["Gambar"].astype(str)
         df.to_excel(EXCEL_FILE, index=False)
         return df
-
 def save_data(df):
     df.to_excel(EXCEL_FILE, index=False)
 
