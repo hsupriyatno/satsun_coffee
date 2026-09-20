@@ -240,66 +240,130 @@ elif selected == "Find Us":
 
 elif selected == "Admin Dashboard":
     st.title("📊 Satsun Internal Dashboard")
-    
+
     st.subheader("➕ Tambah Menu Baru")
+    # Tentukan daftar kategori standar agar konsisten
+    DAFTAR_KATEGORI = [
+        "Coffee",
+        "Non-Coffee",
+        "Main Menu",
+        "Snack",
+        "Dessert",
+    ]
+
     with st.form("form_tambah_menu", clear_on_submit=True):
-        new_kategori = st.selectbox("Kategori", ["Coffee", "Non-Coffee", "Main menu", "Snack"])
+        new_kategori = st.selectbox("Kategori", DAFTAR_KATEGORI)
         new_nama = st.text_input("Nama Makanan / Minuman")
         new_harga = st.number_input("Harga (Rp)", min_value=0, step=1000)
         submit_btn = st.form_submit_button("Simpan ke Excel")
-        
+
         if submit_btn:
-            if new_nama != "":
-                new_row = pd.DataFrame([{"Kategori": new_kategori, "Nama Menu": new_nama, "Harga": new_harga, "Gambar": ""}])
+            if new_nama.strip() != "":
+                new_row = pd.DataFrame(
+                    [
+                        {
+                            "Kategori": new_kategori,
+                            "Nama Menu": new_nama,
+                            "Harga": new_harga,
+                            "Gambar": "",
+                        }
+                    ]
+                )
                 df_menu = pd.concat([df_menu, new_row], ignore_index=True)
                 save_data(df_menu)
-                st.success("Berhasil ditambahkan! Silakan upload gambar di menu edit bawah.")
-                st.rerun()
-                
-    st.divider()
-    
-    st.subheader("📝 Kelola & Edit Menu")
-    st.dataframe(df_menu, use_container_width=True)
-    
-    col_edit, col_delete = st.columns(2)
-    
-    with col_edit:
-        st.markdown("### ✏️ Form Edit Menu / Upload Gambar")
-        menu_to_edit = st.selectbox("Pilih menu:", df_menu["Nama Menu"].unique(), key="select_edit")
-        row_data = df_menu[df_menu["Nama Menu"] == menu_to_edit].iloc[0]
-        
-        with st.form("form_edit_menu"):
-            edit_kategori = st.selectbox("Kategori Baru:", ["Coffee", "Non-Coffee", "Snack", "Dessert"], index=["Coffee", "Non-Coffee", "Snack", "Dessert"].index(row_data["Kategori"]))
-            edit_nama = st.text_input("Nama Baru:", value=row_data["Nama Menu"])
-            edit_harga = st.number_input("Harga Baru (Rp):", min_value=0, step=1000, value=int(row_data["Harga"]))
-            uploaded_file = st.file_uploader("Upload Foto (.jpg/.jpeg/.png):", type=["jpg", "jpeg", "png"])
-            save_edit_btn = st.form_submit_button("💾 Simpan Perubahan")
-            
-            if save_edit_btn:
-                idx = df_menu[df_menu["Nama Menu"] == menu_to_edit].index[0]
-                nama_file_gambar = row_data["Gambar"] if pd.notna(row_data["Gambar"]) else ""
-                
-                if uploaded_file is not None:
-                    ext = os.path.splitext(uploaded_file.name)[1].lower()
-                    nama_file_gambar = f"{edit_nama.lower().replace(' ', '_')}{ext}"
-                    path_simpan = os.path.join(IMAGE_FOLDER, nama_file_gambar)
-                    
-                    with open(path_simpan, "wb") as f:
-                        f.write(uploaded_file.getbuffer())
-                
-                df_menu.at[idx, "Kategori"] = edit_kategori
-                df_menu.at[idx, "Nama Menu"] = edit_nama
-                df_menu.at[idx, "Harga"] = edit_harga
-                df_menu.at[idx, "Gambar"] = nama_file_gambar
-                save_data(df_menu)
-                st.success("Data dan Gambar berhasil diperbarui!")
+                st.success(
+                    "Berhasil ditambahkan! Silakan upload gambar di menu edit"
+                    " bawah."
+                )
                 st.rerun()
 
-    with col_delete:
-        st.markdown("### 🗑️ Hapus Menu")
-        menu_to_delete = st.selectbox("Pilih menu yang ingin dihapus:", df_menu["Nama Menu"].unique(), key="select_delete")
-        if st.button("❌ Hapus Menu Selected", type="primary", key="del_menu"):
-            df_menu = df_menu[df_menu["Nama Menu"] != menu_to_delete]
-            save_data(df_menu)
-            st.error(f"'{menu_to_delete}' telah dihapus.")
-            st.rerun()
+    st.divider()
+
+    st.subheader("📝 Kelola & Edit Menu")
+    st.dataframe(df_menu, use_container_width=True)
+
+    # Cek apakah daftar menu kosong sebelum menampilkan form Edit/Delete
+    if df_menu.empty:
+        st.info("📌 Belum ada menu di database. Silakan tambah menu baru di atas.")
+    else:
+        col_edit, col_delete = st.columns(2)
+
+        with col_edit:
+            st.markdown("### ✏️ Form Edit Menu / Upload Gambar")
+            menu_list = df_menu["Nama Menu"].unique()
+            menu_to_edit = st.selectbox(
+                "Pilih menu:", menu_list, key="select_edit"
+            )
+
+            # Ambil data menu yang dipilih
+            row_data = df_menu[df_menu["Nama Menu"] == menu_to_edit].iloc[0]
+
+            # Cari index kategori default agar safe jika ada kategori di luar list
+            kat_saat_ini = row_data["Kategori"]
+            idx_kategori = (
+                DAFTAR_KATEGORI.index(kat_saat_ini)
+                if kat_saat_ini in DAFTAR_KATEGORI
+                else 0
+            )
+
+            with st.form("form_edit_menu"):
+                edit_kategori = st.selectbox(
+                    "Kategori Baru:", DAFTAR_KATEGORI, index=idx_kategori
+                )
+                edit_nama = st.text_input(
+                    "Nama Baru:", value=row_data["Nama Menu"]
+                )
+                edit_harga = st.number_input(
+                    "Harga Baru (Rp):",
+                    min_value=0,
+                    step=1000,
+                    value=int(row_data["Harga"]),
+                )
+                uploaded_file = st.file_uploader(
+                    "Upload Foto (.jpg/.jpeg/.png):",
+                    type=["jpg", "jpeg", "png"],
+                )
+                save_edit_btn = st.form_submit_button("💾 Simpan Perubahan")
+
+                if save_edit_btn:
+                    idx = df_menu[df_menu["Nama Menu"] == menu_to_edit].index[0]
+                    nama_file_gambar = (
+                        row_data["Gambar"]
+                        if pd.notna(row_data["Gambar"])
+                        else ""
+                    )
+
+                    if uploaded_file is not None:
+                        ext = os.path.splitext(uploaded_file.name)[1].lower()
+                        nama_file_gambar = (
+                            f"{edit_nama.lower().replace(' ', '_')}{ext}"
+                        )
+                        path_simpan = os.path.join(
+                            IMAGE_FOLDER, nama_file_gambar
+                        )
+
+                        with open(path_simpan, "wb") as f:
+                            f.write(uploaded_file.getbuffer())
+
+                    df_menu.at[idx, "Kategori"] = edit_kategori
+                    df_menu.at[idx, "Nama Menu"] = edit_nama
+                    df_menu.at[idx, "Harga"] = edit_harga
+                    df_menu.at[idx, "Gambar"] = nama_file_gambar
+                    save_data(df_menu)
+                    st.success("Data dan Gambar berhasil diperbarui!")
+                    st.rerun()
+
+        with col_delete:
+            st.markdown("### 🗑️ Hapus Menu")
+            menu_to_delete = st.selectbox(
+                "Pilih menu yang ingin dihapus:",
+                df_menu["Nama Menu"].unique(),
+                key="select_delete",
+            )
+            if st.button(
+                "❌ Hapus Menu Selected", type="primary", key="del_menu"
+            ):
+                df_menu = df_menu[df_menu["Nama Menu"] != menu_to_delete]
+                save_data(df_menu)
+                st.error(f"'{menu_to_delete}' telah dihapus.")
+                st.rerun()
