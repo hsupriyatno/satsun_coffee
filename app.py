@@ -7,9 +7,18 @@ import urllib.parse
 
 # Konfigurasi Halaman
 st.set_page_config(
-    page_title="Sempat Kuliner",
-    page_icon="☕",
-    layout="centered"
+    page_title="Sempat Kuliner", page_icon="☕", layout="centered"
+)
+
+# Tambahkan Meta Tags untuk Tampilan WhatsApp (Link Preview)
+st.markdown(
+    """
+    <head>
+        <meta property="og:title" content="Sempat Kuliner" />
+        <meta property="og:description" content="Satsun Coffee - Nikmati Kopi Terbaik Kami" />
+    </head>
+""",
+    unsafe_allow_html=True,
 )
 
 # Nama file database Excel dan Folder Gambar
